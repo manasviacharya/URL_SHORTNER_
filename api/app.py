@@ -20,15 +20,22 @@ def generate_short():
 @app.route("/", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
-        print("POST reached")
-
         conn = get_db()
-        print("DB connected")
+        cursor = conn.cursor()
 
+        cursor.execute(
+            "INSERT INTO urls (short_url, original_url) VALUES (%s, %s)",
+            ("test123", "https://example.com")
+        )
+        conn.commit()
+
+        cursor.close()
         conn.close()
-        return "DB OK"
+
+        return "INSERT OK"
 
     return render_template("index.html")
+
 
 
 @app.route("/<short_code>")
