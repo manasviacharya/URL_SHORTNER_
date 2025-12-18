@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import mysql.connector
 import os
 import string, random
@@ -20,19 +20,28 @@ def generate_short():
 @app.route("/", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
-        short_code = "test123"
+        original_url = request.form["url"]
+        short_code = generate_short()
+
+        conn = get_db()
+        cursor = conn.cursor()
+        cursor.execute(
+            "INSERT INTO urls (short_url, original_url) VALUES (%s, %s)",
+            (short_code, original_url)
+        )
+        conn.commit()
+        cursor.close()
+        conn.close()
+
         short_url = request.host_url + short_code
         return render_template("shortened.html", short_url=short_url)
 
     return render_template("index.html")
 
-
-
 @app.route("/<short_code>")
 def redirect_url(short_code):
     conn = get_db()
     cursor = conn.cursor()
-
     cursor.execute(
         "SELECT original_url FROM urls WHERE short_url = %s",
         (short_code,)
@@ -42,5 +51,6 @@ def redirect_url(short_code):
     conn.close()
 
     if result:
-        return result[0], 302
+        return redirect(result[0])
+
     return "URL not found", 404
