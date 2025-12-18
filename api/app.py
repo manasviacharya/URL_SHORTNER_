@@ -20,23 +20,10 @@ def generate_short():
 @app.route("/", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
-        original_url = request.form["url"]
-        short_code = generate_short()
+        print("POST reached")
+        return "POST OK"
 
-        conn = get_db()
-        cursor = conn.cursor()
-
-        cursor.execute(
-            "INSERT INTO urls (short_url, original_url) VALUES (%s, %s)",
-            (short_code, original_url)
-        )
-        conn.commit()
-        cursor.close()
-        conn.close()
-
-        short_url = request.host_url + short_code
-        return render_template("shortened.html", short_url=short_url)
-
+    print("GET reached")
     return render_template("index.html")
 
 @app.route("/<short_code>")
