@@ -21,10 +21,15 @@ def generate_short():
 def home():
     if request.method == "POST":
         print("POST reached")
-        return "POST OK"
 
-    print("GET reached")
+        conn = get_db()
+        print("DB connected")
+
+        conn.close()
+        return "DB OK"
+
     return render_template("index.html")
+
 
 @app.route("/<short_code>")
 def redirect_url(short_code):
