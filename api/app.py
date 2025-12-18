@@ -1,9 +1,8 @@
+from flask import Flask, render_template, request, redirect, url_for
 import os
+import mysql.connector
 import random
 import string
-
-import mysql.connector
-from flask import Flask, request, render_template, redirect
 
 app = Flask(__name__)
 
@@ -16,6 +15,11 @@ def get_db():
         port=int(os.getenv("MYSQLPORT", 3306))
     )
 
+def generate_short_url(length=5):
+    chars = string.ascii_letters + string.digits
+    return "".join(random.choice(chars) for _ in range(length))
+
+
 @app.route("/", methods=["GET", "POST"])
 def home():
     conn = get_db()
@@ -23,9 +27,18 @@ def home():
 
     if request.method == "POST":
         original_url = request.form.get("url")
+        short_url = generate_short_url()
 
-        chars = string.ascii_letters + string.digits
-        short_url = "".join(random.choice(chars) for _ in range(5))
+        cursor.execute(
+            "SELECT short_url FROM urls WHERE short_url = %s",
+            (short_url,)
+        )
+        while cursor.fetchone():
+            short_url = generate_short_url()
+            cursor.execute(
+                "SELECT short_url FROM urls WHERE short_url = %s",
+                (short_url,)
+            )
 
         cursor.execute(
             "INSERT INTO urls (short_url, original_url) VALUES (%s, %s)",
@@ -35,11 +48,12 @@ def home():
 
         base_url = request.host_url.rstrip("/")
         return render_template(
-            "index.html",
+            "shortened.html",
             shortened_url=f"{base_url}/{short_url}"
         )
 
-    return render_template("index.html", shortened_url=None)
+    return render_template("index.html")
+
 
 @app.route("/<short_url>")
 def redirect_url(short_url):
