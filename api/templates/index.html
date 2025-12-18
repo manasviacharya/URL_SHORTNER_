@@ -3,13 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>URL Shortener</title>
+    <style>
+        body {
+            background: #f4f6f8;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            width: 350px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background: #4f46e5;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #4338ca;
+        }
+    </style>
 </head>
 <body>
-    <h1>URL Shortener</h1>
-
-    <form method="POST">
-        <input type="text" name="url" placeholder="Enter long URL" required>
-        <button type="submit">Shorten</button>
-    </form>
+    <div class="card">
+        <h1>🔗 URL Shortener</h1>
+        <form method="POST">
+            <input type="text" name="url" placeholder="Paste your long URL..." required>
+            <button type="submit">Shorten URL</button>
+        </form>
+    </div>
 </body>
 </html>
