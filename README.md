@@ -109,6 +109,7 @@ URL_SHORTNER_/
 
 ## 🐍 Core Backend Logic
 Short URL Generation
+```python 
 def generate_short_url(length=5):
     chars = string.ascii_letters + string.digits
     return "".join(random.choice(chars) for _ in range(length))
@@ -119,6 +120,7 @@ cursor.execute(
     (short_url, original_url)
 )
 conn.commit()
+```
 
 ## 📦 Dependencies
 Flask==3.0.0
