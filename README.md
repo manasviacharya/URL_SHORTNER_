@@ -125,6 +125,8 @@ Flask==3.0.0
 gunicorn==21.2.0
 
 ## 🐳 Docker Configuration
+
+```dockerfile
 Dockerfile
 FROM python:3.11-slim
 
@@ -137,7 +139,8 @@ COPY . .
 
 CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
 
-Run Locally
+```
+## Run Locally
 docker build -t url-shortener .
 docker run -p 5000:5000 url-shortener
 
