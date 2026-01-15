@@ -5,13 +5,9 @@ from flask import Flask, request, redirect, render_template
 
 app = Flask(__name__)
 
-# -------------------------------
-# DATABASE (SQLite)
-# -------------------------------
 conn = sqlite3.connect("urls.db", check_same_thread=False)
 cursor = conn.cursor()
 
-# Create table if not exists
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS urls (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -21,16 +17,10 @@ CREATE TABLE IF NOT EXISTS urls (
 """)
 conn.commit()
 
-# -------------------------------
-# UTILS
-# -------------------------------
 def generate_short_url(length=5):
     chars = string.ascii_letters + string.digits
     return "".join(random.choice(chars) for _ in range(length))
 
-# -------------------------------
-# ROUTES
-# -------------------------------
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
@@ -76,8 +66,5 @@ def redirect_url(short_url):
     return "URL not found", 404
 
 
-# -------------------------------
-# APP START
-# -------------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
