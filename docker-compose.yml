@@ -1,0 +1,25 @@
+services:
+  web:
+    build: .
+    ports:
+    - "8000:5000"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: url_shortner
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: url_shortner
+    volumes:
+    - db_data:/var/lib/mysql
+    - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  db_data:

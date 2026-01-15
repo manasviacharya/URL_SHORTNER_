@@ -1,4 +1,7 @@
-CREATE TABLE urls (
+CREATE DATABASE IF NOT EXISTS url_shortner;
+USE url_shortner;
+
+CREATE TABLE IF NOT EXISTS urls (
     id INT AUTO_INCREMENT PRIMARY KEY,
     short_url VARCHAR(10) UNIQUE NOT NULL,
     original_url TEXT NOT NULL
