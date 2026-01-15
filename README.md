@@ -105,8 +105,9 @@ URL_SHORTNER_/
 │
 └── docs/
     └── architecture-and-logic.png
+```
 
-🐍 Core Backend Logic
+## 🐍 Core Backend Logic
 Short URL Generation
 def generate_short_url(length=5):
     chars = string.ascii_letters + string.digits
@@ -119,11 +120,11 @@ cursor.execute(
 )
 conn.commit()
 
-📦 Dependencies
+## 📦 Dependencies
 Flask==3.0.0
 gunicorn==21.2.0
 
-🐳 Docker Configuration
+## 🐳 Docker Configuration
 Dockerfile
 FROM python:3.11-slim
 
@@ -140,7 +141,7 @@ Run Locally
 docker build -t url-shortener .
 docker run -p 5000:5000 url-shortener
 
-☁️ Deployment on Render
+## ☁️ Deployment on Render
 
 Deployed as a Docker Web Service
 
@@ -150,7 +151,7 @@ Port 5000 exposed
 
 SQLite used to avoid paid databases
 
-⚠️ Data Persistence Note
+## ⚠️ Data Persistence Note
 
 SQLite data is ephemeral on Render free tier
 
@@ -158,7 +159,7 @@ Data resets on redeploy or restart
 
 Accepted for academic/demo purposes
 
-🎓 Academic Relevance
+## 🎓 Academic Relevance
 
 This project demonstrates:
 
@@ -172,11 +173,11 @@ Cloud deployment workflows
 
 Real-world deployment constraints
 
-👩‍💻 Author
+## 👩‍💻 Author
 
 Manasvi Acharya
 GitHub: https://github.com/manasviacharya
 
-📜 License
+## 📜 License
 
 Educational use only.
